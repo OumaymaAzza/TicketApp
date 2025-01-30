@@ -18,7 +18,7 @@ Une application Android simple qui simule le traitement des commandes et l'impre
 - **Kotlin Coroutines** : Gestion des tâches en arrière-plan (connexion au réseau pour l'impression).
 - **ESC/POS** : Commandes pour le formatage des tickets d'impression.
 - **RecyclerView** : Affichage dynamique de la liste des articles.
-
-![image](https://github.com/user-attachments/assets/cdadb213-843e-4d24-b4b4-cb1967d5abe1)
+  
+![image](https://github.com/user-attachments/assets/67fdaefd-83b6-487f-aaed-87662644ccfe)
 
 
