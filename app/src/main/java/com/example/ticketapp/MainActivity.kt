@@ -40,20 +40,19 @@ class MainActivity : AppCompatActivity() {
 
         printButton = findViewById(R.id.printButton)
         printButton.setOnClickListener {
-            generateTicketWithEscPos(orderItemList, "12345678") // Use the dynamic order number
+            generateTicketWithEscPos(orderItemList, "12345678") 
         }
     }
 
     private fun generateTicketWithEscPos(cartItems: List<OrderItem>, commandNumber: String) {
-        // Launch a background task using Kotlin coroutines
+       
         GlobalScope.launch(Dispatchers.IO) {
-            val printerIp = "192.168.10.200" // Replace with your printer's IP
-            val printerPort = 9100 // Default port for ESC/POS printers
+            val printerIp = "192.168.10.200" 
+            val printerPort = 9100 
 
-            // Generate ticket text using ESC/POS commands
             val ticketText = buildString {
-                append("\u001B\u0040") // Initialize the printer
-                append("\u001B\u0061\u0001") // Align center
+                append("\u001B\u0040")
+                append("\u001B\u0061\u0001") 
                 append("Snack Store\n")
                 append("===================================\n\n")
                 append(String.format("%-20s %5s %10s\n", "Item", "Qty", "Price"))
@@ -72,38 +71,37 @@ class MainActivity : AppCompatActivity() {
                 append("Delivery Charge:   $deliveryCharge DH\n")
                 append("Total:            $total DH\n")
                 append("====================================\n\n")
-                append("\u001B\u0061\u0001") // Align center again
-                append("\u001D\u0068\u0032") // Cut the paper
-                append("\u001D\u0077\u0002") // Barcode width
-                append("\u001D\u006B\u0004") // Barcode command
-                append("$commandNumber\u0000") // Add order number
+                append("\u001B\u0061\u0001") 
+                append("\u001D\u0068\u0032") 
+                append("\u001D\u0077\u0002") 
+                append("\u001D\u006B\u0004") 
+                append("$commandNumber\u0000") 
 
                 append("N.$commandNumber\n\n")
                 append("Thank you for your order!\n\n")
                 append("karima maryam oumayma hiba\n\n")
                 append("\n\n\n")
 
-                append("\n\n\n\u001D\u0056\u0000") // Command to cut the paper
+                append("\n\n\n\u001D\u0056\u0000") 
             }
 
             try {
                 val socket = Socket()
-                socket.connect(InetSocketAddress(printerIp, printerPort), 5000)  // Timeout set to 5 seconds
+                socket.connect(InetSocketAddress(printerIp, printerPort), 5000) 
 
-                // Check if the socket is connected
+          
                 if (socket.isConnected) {
                     val outputStream: OutputStream = socket.getOutputStream()
 
-                    // Send ESC/POS commands
+             
                     val escPosBytes = ticketText.toByteArray(Charset.forName("UTF-8"))
                     outputStream.write(escPosBytes)
                     outputStream.flush()
 
-                    // Close output stream and socket
+                 
                     outputStream.close()
                     socket.close()
 
-                    // Run on the main thread to show success message
                     runOnUiThread {
                         Toast.makeText(this@MainActivity, "Ticket imprimé avec succès!", Toast.LENGTH_SHORT).show()
                     }
@@ -113,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                // Handle errors and show a message
+          
                 e.printStackTrace()
                 runOnUiThread {
                     Toast.makeText(this@MainActivity, "Erreur d'impression: ${e.message}", Toast.LENGTH_SHORT).show()
