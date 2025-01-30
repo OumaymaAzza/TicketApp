@@ -19,6 +19,8 @@ Une application Android simple qui simule le traitement des commandes et l'impre
 - **ESC/POS** : Commandes pour le formatage des tickets d'impression.
 - **RecyclerView** : Affichage dynamique de la liste des articles.
   
+## Design :
+
 ![image](https://github.com/user-attachments/assets/67fdaefd-83b6-487f-aaed-87662644ccfe)
 
 
